@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Anniversary Moment</title>
+   <link rel="icon" type="image/x-icon" href="./favicon.ico">
+   <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+   <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+      }
+
+      body {
+         font-family: "Inter", sans-serif;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         height: 100vh;
+         background: linear-gradient(135deg, #f87171, #ef4444);
+         margin: 0;
+      }
+
+      .formbold-main-wrapper {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         width: 100%;
+         padding: 20px;
+      }
+
+      .formbold-form-wrapper {
+         max-width: 550px;
+         width: 100%;
+         background: #ffffff;
+         padding: 40px;
+         border-radius: 8px;
+         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+         text-align: center;
+      }
+
+      .formbold-form-input,
+      .formbold-btn {
+         height: 50px;
+         padding: 0 15px;
+         border-radius: 6px;
+         font-size: 16px;
+         font-weight: 500;
+      }
+
+      .formbold-form-input {
+         width: 100%;
+         border: 1px solid #DDE3EC;
+         background: #f9f9ff;
+         color: #536387;
+         outline: none;
+      }
+
+      .formbold-form-input:focus {
+         border-color: #ef4444;
+         box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .formbold-email-subscription-form {
+         display: flex;
+         gap: 10px;
+         flex-direction: column;
+      }
+
+      .formbold-btn {
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         gap: 8px;
+         border: none;
+         background-color: #ef4444;
+         color: white;
+         cursor: pointer;
+         transition: background-color 0.3s;
+      }
+
+      .formbold-btn:hover {
+         background-color: #dc2626;
+         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .iframe-container {
+         position: relative;
+         width: 100%;
+         height: 100vh;
+         background-color: #f0f0f0;
+         display: none;
+      }
+
+      iframe {
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         border: none;
+      }
+
+      .formbold-main-wrapper {
+         position: relative;
+         z-index: 1;
+         padding: 20px;
+      }
+   </style>
+</head>
+
+<body>
+   <!-- Container Iframe -->
+   <div class="iframe-container" id="iframe-container">
+      <iframe src="https://drive.google.com/file/d/17Wd4qOX6-WKmiMXKlow8sg0IUivI5a4-/preview" allow="autoplay"></iframe>
+   </div>
+
+   <!-- Form Validation -->
+   <div class="formbold-main-wrapper">
+      <div class="formbold-form-wrapper">
+         <form id="validation-form">
+            <div class="formbold-email-subscription-form">
+               <input type="text" id="inputCode" class="formbold-form-input" placeholder="Enter code" />
+               <button type="submit" class="formbold-btn">
+                  Validate Code
+               </button>
+            </div>
+         </form>
+         <div id="result" style="margin-top: 20px;"></div>
+      </div>
+   </div>
+
+   <script>
+      async function sha256(str) {
+         const buffer = new TextEncoder().encode(str);
+         const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+         const hashArray = Array.from(new Uint8Array(hashBuffer));
+         return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+      }
+
+      const storedHash = "e09b7a41131456a05a5bc371ff5df6b1ad9cbe100beca96136f0da394e436901";
+
+      document.getElementById("validation-form").addEventListener("submit", async function (event) {
+         event.preventDefault();
+
+         const inputCode = document.getElementById("inputCode").value;
+         const inputHash = await sha256(inputCode);
+
+         const resultDiv = document.getElementById("result");
+         const iframeContainer = document.getElementById("iframe-container");
+
+         if (inputHash === storedHash) {
+            resultDiv.innerHTML = "<span style='color: green;'>Code is correct!</span>";
+            // Tampilkan iframe dan sembunyikan form
+            iframeContainer.style.display = "block"; // Menampilkan iframe
+            document.querySelector(".formbold-main-wrapper").style.display = "none"; // Menyembunyikan form
+         } else {
+            resultDiv.innerHTML = "<span style='color: red;'>Code is incorrect.</span>";
+         }
+      });
+   </script>
+</body>
+
+</html>
