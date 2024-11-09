@@ -117,7 +117,7 @@
 <body>
    <!-- Container Iframe -->
    <div class="iframe-container" id="iframe-container">
-      <iframe src="https://drive.google.com/file/d/17Wd4qOX6-WKmiMXKlow8sg0IUivI5a4-/preview" allow="autoplay"></iframe>
+      <iframe id="iframe" allow="autoplay"></iframe>
    </div>
 
    <!-- Form Validation -->
@@ -144,6 +144,7 @@
       }
 
       const storedHash = "e09b7a41131456a05a5bc371ff5df6b1ad9cbe100beca96136f0da394e436901";
+      const iframeSrc = "https://drive.google.com/file/d/17Wd4qOX6-WKmiMXKlow8sg0IUivI5a4-/preview";
 
       document.getElementById("validation-form").addEventListener("submit", async function (event) {
          event.preventDefault();
@@ -153,12 +154,15 @@
 
          const resultDiv = document.getElementById("result");
          const iframeContainer = document.getElementById("iframe-container");
+         const iframe = document.getElementById("iframe");
 
          if (inputHash === storedHash) {
             resultDiv.innerHTML = "<span style='color: green;'>Code is correct!</span>";
-            // Tampilkan iframe dan sembunyikan form
-            iframeContainer.style.display = "block"; // Menampilkan iframe
-            document.querySelector(".formbold-main-wrapper").style.display = "none"; // Menyembunyikan form
+            // Set iframe src dynamically
+            iframe.src = iframeSrc;
+            // Show iframe and hide the form
+            iframeContainer.style.display = "block"; // Display iframe
+            document.querySelector(".formbold-main-wrapper").style.display = "none"; // Hide form
          } else {
             resultDiv.innerHTML = "<span style='color: red;'>Code is incorrect.</span>";
          }
