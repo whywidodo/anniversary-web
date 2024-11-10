@@ -136,37 +136,7 @@
    </div>
 
    <script>
-      async function sha256(str) {
-         const buffer = new TextEncoder().encode(str);
-         const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
-         const hashArray = Array.from(new Uint8Array(hashBuffer));
-         return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-      }
-
-      const storedHash = "e09b7a41131456a05a5bc371ff5df6b1ad9cbe100beca96136f0da394e436901";
-      const iframeSrc = "https://drive.google.com/file/d/17Wd4qOX6-WKmiMXKlow8sg0IUivI5a4-/preview";
-
-      document.getElementById("validation-form").addEventListener("submit", async function (event) {
-         event.preventDefault();
-
-         const inputCode = document.getElementById("inputCode").value;
-         const inputHash = await sha256(inputCode);
-
-         const resultDiv = document.getElementById("result");
-         const iframeContainer = document.getElementById("iframe-container");
-         const iframe = document.getElementById("iframe");
-
-         if (inputHash === storedHash) {
-            resultDiv.innerHTML = "<span style='color: green;'>Code is correct!</span>";
-            // Set iframe src dynamically
-            iframe.src = iframeSrc;
-            // Show iframe and hide the form
-            iframeContainer.style.display = "block"; // Display iframe
-            document.querySelector(".formbold-main-wrapper").style.display = "none"; // Hide form
-         } else {
-            resultDiv.innerHTML = "<span style='color: red;'>Code is incorrect.</span>";
-         }
-      });
+      eval(function (p, a, c, k, e, r) { e = function (c) { return (c < a ? '' : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36)) }; if (!''.replace(/^/, String)) { while (c--) r[e(c)] = k[c] || e(c); k = [function (e) { return r[e] }]; e = function () { return '\\w+' }; c = 1 }; while (c--) if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]); return p }('b c e(a){1 f=g u().v(a);1 h=i w.x.y("z-A",f);1 j=B.C(g D(h));E j.F(k=>k.G(16).H(2,\'0\')).I(\'\')}1 l="J";1 m="K://L.M.N/O/d/P-Q-/R";3.4("S-T").U("V",b c(a){a.W();1 8=3.4("8").X;1 n=i e(8);1 9=3.4("Y");1 o=3.4("5-Z");1 5=3.4("5");10(n===l){9.p="<6 7=\'q: 11;\'>r s 12!</6>";5.13=m;o.7.t="14";3.15(".17-18-19").7.t="1a"}1b{9.p="<6 7=\'q: 1c;\'>r s 1d.</6>"}});', 62, 76, '|const||document|getElementById|iframe|span|style|inputCode|resultDiv||async|function||sha256|buffer|new|hashBuffer|await|hashArray|byte|storedHash|iframeSrc|inputHash|iframeContainer|innerHTML|color|Code|is|display|TextEncoder|encode|crypto|subtle|digest|SHA|256|Array|from|Uint8Array|return|map|toString|padStart|join|e09b7a41131456a05a5bc371ff5df6b1ad9cbe100beca96136f0da394e436901|https|drive|google|com|file|17Wd4qOX6|WKmiMXKlow8sg0IUivI5a4|preview|validation|form|addEventListener|submit|preventDefault|value|result|container|if|green|correct|src|block|querySelector||formbold|main|wrapper|none|else|red|incorrect'.split('|'), 0, {}))
    </script>
 </body>
 
